@@ -23,10 +23,15 @@
     bottom: 0;
     width: 100%;
     z-index: 5;
-    background-color: lightgrey;
+    background-color: rgb(255, 255, 255);
     text-align: center;
     padding-left: 400px;
     padding-right: 400px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    -webkit-box-shadow: 0px -4px 5px 0px rgb(197, 197, 197);
+-moz-box-shadow: 0px -4px 5px 0px rgb(216, 216, 216);
+box-shadow: 0px -4px 5px 0px rgb(211, 211, 211);
   }
   .nav ul {
     padding: 0;
@@ -43,10 +48,22 @@
     padding: .25rem;
   }
   
-  .nav li.active {
-    background-color: #555;
-  }
-  
   .nav li:hover {
-    background-color: #777;
+    color:#6972F0
   }
+
+  .chat li.active,
+  .calendar li.active,
+  .entries li.active {
+      color: #6972F0;
+  }
+
+  .icon{
+    margin-bottom: auto; /* Push icon to the top */
+    padding-bottom: 5px;
+}
+
+.navLink span {
+    margin-top: auto; /* Push text to the bottom */
+    font-size: 0.9rem; /* Adjust size if needed */
+}

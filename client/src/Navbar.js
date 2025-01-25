@@ -5,15 +5,15 @@ import { faPencil, faBook, faCalendarDays } from '@fortawesome/free-solid-svg-ic
 export default function Navbar() {
   return (
     <nav className="nav">
-      <ul>
-        <CustomLink to = "/chat"><FontAwesomeIcon icon={faPencil}/>
-        Chat</CustomLink>
+      <ul className="chat">
+        <CustomLink to = "/chat"><div className="navLink"><div className="icon"><FontAwesomeIcon icon={faPencil} size="xl"/></div><span>Chat</span></div>
+        </CustomLink>
       </ul>
-      <ul>
-      <CustomLink to="/entries"><FontAwesomeIcon icon={faBook}/>Entries</CustomLink>
+      <ul className="entries">
+      <CustomLink to="/entries"><div className="navLink"><div className="icon"><FontAwesomeIcon icon={faBook} size="xl"/></div><span>Entries</span></div></CustomLink>
       </ul>
-      <ul>
-      <CustomLink to="/calendar"><FontAwesomeIcon icon={faCalendarDays} size="lg" style={{color: "#B197FC",}} />Calendar</CustomLink>
+      <ul className="calendar">
+      <CustomLink to="/calendar"><div className="navLink"><div className="icon"><FontAwesomeIcon icon={faCalendarDays} size="xl"/></div><span>Calendar</span></div></CustomLink>
       </ul>
     </nav>
   )
