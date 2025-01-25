@@ -15,6 +15,8 @@ function FetchData() {
 
       <button className="add-entry-btn">Add New Entry</button>
 
+      <button className="entry-button">Button</button>
+
       <div className="test">
         <div className="posts">
           {Data.map((post) => {

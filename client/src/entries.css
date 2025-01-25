@@ -36,4 +36,16 @@
   .add-entry-btn:hover {
     background-color: #0056b3;
   }
+
+  .entry-button {
+    display: inline-block;
+    padding: 100px 65px;
+    border: none;
+    border-radius: 10px;
+    background-color: #9bb2f6;
+    color: black;
+    cursor: pointer;
+    text-align: left;
+    
+  }
   
