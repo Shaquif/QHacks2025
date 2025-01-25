@@ -5,8 +5,8 @@ export default function Navbar() {
     <nav className="nav">
       <ul>
         <CustomLink to = "/chat">Chat</CustomLink>
-        <CustomLink to="/calendar">Pricing</CustomLink>
-        <CustomLink to="/entries">About</CustomLink>
+        <CustomLink to="/calendar">Calendar</CustomLink>
+        <CustomLink to="/entries">Entries</CustomLink>
       </ul>
     </nav>
   )

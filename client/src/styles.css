@@ -15,8 +15,8 @@
     background-color: #333;
     color: grey;
     display: flex;
-    justify-content: space-between;
-    align-items: stretch;
+    justify-content: center;
+    align-items: center;
     gap: 2rem;
     padding: 0 1rem;
     position: fixed;
