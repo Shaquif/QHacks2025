@@ -1,0 +1,18 @@
+.calendar-container {
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  .react-calendar {
+    border: none;
+    font-family: Arial, sans-serif;
+  }
+  .react-calendar__tile--active {
+    background: #4caf50 !important;
+    color: white !important;
+  }
+  

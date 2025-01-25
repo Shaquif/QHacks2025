@@ -1,29 +1,18 @@
-import React,{ useState, useEffect } from 'react'
+import React, { useState } from 'react';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css'; // Import default styles
+import '../calendar.css'; // Import your custom styles
 
-export default function Calendar() {
-      const [data, setData] = useState([{}])
-    
-      useEffect(() => {
-        fetch("/members").then(
-          res => res.json()
-        ).then(
-          data => {
-            setData(data)
-            console.log(data)
-          }
-        )
-      }, [])
-    
-      return (
-        <div>
-    
-            {(typeof data.members === 'undefined') ? (
-              <p>Loading...</p>
-            ): (
-              data.members.map((member, i) => (
-                <p key={i}>{member}</p>
-              ))
-            )}
-        </div>
-      )
-  }
+const MyCalendar = () => {
+  const [date, setDate] = useState(new Date());
+
+  return (
+    <div className="calendar-container">
+      <h2>Schedule</h2>
+      <Calendar onChange={setDate} value={date} />
+      <p>Selected date: {date.toDateString()}</p>
+    </div>
+  );
+};
+
+export default MyCalendar;
