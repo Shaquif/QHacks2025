@@ -60,7 +60,7 @@
 
 /* Change the background and text color of the current date */
 .react-calendar__tile--now {
-  background: #ef5f5f !important;  /* Change this to your desired color */
+  background: #bbdaf4 !important;  /* Change this to your desired color */
   color: black !important;
   border-radius: 5px;
   font-weight: bold;
