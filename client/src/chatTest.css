@@ -1,8 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Urbanist', sans-serif;
+}
+
 /* Chat Container */
 .chat-container {
     display: flex;
     flex-direction: column;
-    height: 80vh;
+    height: 85vh;
     background: #ffffff;
 }
 
@@ -38,23 +44,26 @@
 /* Suggestions Title */
 .suggestion-title {
     color: gray;
-    font-size: 14px;
+    font-size: 20px;
+    font-weight: bold;
     margin-bottom: 10px;
 }
 
 /* Smoother Fade-In Effect */
 .suggestion {
+    color: gray;
     background: #f5f5f5;
-    padding: 12px;
+    padding: 24px;
     margin: 10px auto;
     border-radius: 10px;
-    width: 80%;
+    width: 90%;
     text-align: center;
     font-size: 16px;
     cursor: pointer;
     opacity: 0;
     transform: translateY(10px);
     animation: fadeInUp 0.6s ease-out forwards;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 /* Delayed appearance for a natural effect */
@@ -62,26 +71,24 @@
 .suggestion:nth-child(2) { animation-delay: 0.4s; }
 .suggestion:nth-child(3) { animation-delay: 0.6s; }
 
-/* Separate Fade-Out Effect (Prevent Overlap with Fade-In) */
-.suggestion.fade-out {
-    animation: fadeOutDown 0.4s ease-in-out forwards;
+/* Clicked Suggestion (Stays Highlighted) */
+.suggestion.selected {
+    background-color: #6972F0;
+    color: white;
+    transform: scale(1.05);
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out, transform 0.2s ease-in-out;
+    pointer-events: none; /* Prevents hover effect */
+}
+
+/* Hover Effect (Only for Unselected Suggestions) */
+.suggestion:not(.selected):hover {
+    background: #e0e0e0;
 }
 
 /* Smoother Fade-In Animation */
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
-}
-
-/* Smooth Fade-Out Animation */
-@keyframes fadeOutDown {
-    from { opacity: 1; transform: translateY(0); }
-    to { opacity: 0; transform: translateY(15px); }
-}
-
-/* Hover Effect for Suggestions */
-.suggestion:hover {
-    background: #e0e0e0;
 }
 
 /* Chat Messages */
@@ -142,73 +149,60 @@
 /* Chat Input */
 .chat-input {
     flex-grow: 1;
-    padding: 15px;
+    padding: 20px;
     border: none;
-    border-radius: 20px;
+    border-radius: 15px;
     background: #f5f5f5;
     font-size: 16px;
     outline: none;
-    width: 100%; /* Full width */
-}
-
-/* Bottom Section (Input & Buttons Together) */
-.bottom-section {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Input on left, buttons on right */
-    padding: 10px 20px;
-    background: white;
-}
-
-/* Chat Input */
-.chat-input {
-    flex-grow: 1;
-    padding: 15px;
-    border: none;
-    border-radius: 20px;
-    background: #f5f5f5;
-    font-size: 16px;
-    outline: none;
-    width: 100%;
+    width: 95%;
+    font-family: 'Urbanist', sans-serif;
 }
 
 /* Chat Button Container (Bottom-Right Alignment) */
 .chat-button-container {
     width: 100%;
     display: flex;
-    justify-content: flex-end; /* Align buttons to the right */
+    justify-content: flex-end;
     gap: 10px;
-    margin-top: 10px; /* Space from input */
+    margin-top: 10px;
+    padding-right: 45px;
 }
 
-/* Save Journal Button */
+/* Consistent Button Styling */
+.keep-prompting,
 .save-journal {
     padding: 12px 20px;
-    background-color: #28a745;
-    color: white;
+    min-width: 150px;
+    height: 45px;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
+    font-size: 16px;
     cursor: pointer;
-    transition: background 0.3s ease-in-out;
-}
-
-.save-journal:hover {
-    background-color: #218838;
+    text-align: center;
 }
 
 /* Keep Prompting Button */
 .keep-prompting {
-    padding: 12px 20px;
     background-color: #007bff;
     color: white;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 16px;
     transition: background 0.3s ease-in-out;
+    font-family: 'Urbanist', sans-serif;
+
 }
 
 .keep-prompting:hover {
     background-color: #0056b3;
+}
+
+/* Save Journal Button */
+.save-journal {
+    background-color: #6972F0;
+    color: white;
+    transition: background 0.3s ease-in-out;
+    font-family: 'Urbanist', sans-serif;
+}
+
+.save-journal:hover {
+    background-color: #218838;
 }

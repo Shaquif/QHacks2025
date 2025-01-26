@@ -56,7 +56,6 @@ const ChatInterface = () => {
   const handleKeepPrompting = async () => {
     console.log("📢 'Keep Prompting' button clicked!");
 
-    // If there is text in the input field, submit it first before prompting AI
     if (value.trim()) {
       handleSendMessage();
     }
@@ -109,6 +108,10 @@ const ChatInterface = () => {
     }
   };
 
+  const handleSuggestionClick = (suggestion) => {
+    setSelectedSuggestion(suggestion); // Highlight clicked suggestion
+  };
+
   return (
     <div className="chat-container">
       {/* Header Section */}
@@ -117,15 +120,15 @@ const ChatInterface = () => {
         <h1>What's on your mind?</h1>
       </div>
 
-      {/* Starting Suggestions with fade effect */}
+      {/* Starting Suggestions */}
       {showSuggestions && suggestions.length > 0 && (
         <div className="suggestions">
           <p className="suggestion-title">Starting Suggestions:</p>
           {suggestions.map((suggestion, index) => (
             <div 
               key={index} 
-              className={`suggestion ${selectedSuggestion && selectedSuggestion !== suggestion ? "fade-out" : ""}`} 
-              onClick={() => setValue(suggestion)}
+              className={`suggestion ${selectedSuggestion === suggestion ? "selected" : ""}`} 
+              onClick={() => handleSuggestionClick(suggestion)}
             >
               {suggestion}
             </div>
@@ -142,11 +145,11 @@ const ChatInterface = () => {
         ))}
       </div>
 
-      {/* Input Section with Buttons on the Right */}
+      {/* Input Section */}
       <div className="bottom-section">
         <input
           type="text"
-          placeholder="Write here..."
+          placeholder="Press enter to submit message:"
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -155,14 +158,14 @@ const ChatInterface = () => {
 
         {/* Buttons Aligned Bottom-Right */}
         <div className="chat-button-container">
-          <button className="save-journal" onClick={handleSaveJournal}>
-            Save Journal
-          </button>
           {showKeepPrompting && (
             <button className="keep-prompting" onClick={handleKeepPrompting}>
               Keep Prompting
             </button>
           )}
+          <button className="save-journal" onClick={handleSaveJournal}>
+            Finish Journal
+          </button>
         </div>
       </div>
     </div>
