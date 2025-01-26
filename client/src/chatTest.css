@@ -85,7 +85,7 @@
     align-items: center;
     padding: 10px 20px;
     background: white;
-    padding-bottom: 100px
+    padding-bottom: 200px
   }
   
   .chat-input {
@@ -126,3 +126,31 @@
     text-align: center;
   }
   
+  /* Container for Keep Prompting button */
+.keep-prompting-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 90px; /* Adjust position above the input box */
+    width: 100%;
+    background-color: white;
+    z-index: 1000; /* Ensure it's above other elements */
+  }
+  
+  /* Keep Prompting button styling */
+  .keep-prompting {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+  }
+  
+  .keep-prompting:hover {
+    background-color: #0056b3;
+  }

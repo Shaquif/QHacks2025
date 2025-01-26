@@ -6,6 +6,7 @@ const ChatInterface = () => {
   const [sessionData, setSessionData] = useState([]); // Stores conversation history
   const [suggestions, setSuggestions] = useState([]); // Stores initial prompts
   const [showSuggestions, setShowSuggestions] = useState(true); // Controls visibility of suggestions
+  const [showKeepPrompting, setShowKeepPrompting] = useState(false); // Controls visibility of "Keep Prompting"
 
   // Fetch initial prompts when the page loads
   useEffect(() => {
@@ -14,38 +15,43 @@ const ChatInterface = () => {
 
   const fetchInitialPrompts = async () => {
     try {
-        const response = await fetch("http://localhost:5000/start_conversation", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-        });
+      const response = await fetch("http://localhost:5000/start_conversation", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
 
-        const data = await response.json(); // ✅ Ensure JSON is properly parsed
-        console.log("API Response:", data); // 🔍 Debugging
+      const data = await response.json();
+      console.log("API Response:", data);
 
-        // ✅ Fix: Correctly extract the entry array
-        if (data && data.startingPrompts && Array.isArray(data.startingPrompts.entry)) {
-            setSuggestions([...data.startingPrompts.entry]); // ✅ Update state correctly
-        } else {
-            console.error("❌ Invalid API response structure", JSON.stringify(data, null, 2));
-        }
+      if (data?.startingPrompts?.entry && Array.isArray(data.startingPrompts.entry)) {
+        setSuggestions([...data.startingPrompts.entry]);
+      } else {
+        console.error("Invalid API response structure", data);
+      }
     } catch (error) {
-        console.error("❌ Error fetching initial prompts:", error);
+      console.error("Error fetching initial prompts:", error);
     }
-};
+  };
 
   // Handle sending a message
   const handleSendMessage = async () => {
-    if (!value.trim()) return; // Ignore empty input
+    if (!value.trim()) return;
 
     const userMessage = { text: value, sender: "User" };
-    setSessionData([...sessionData, value]); // Append user input to sessionData
-    setMessages((prev) => [...prev, userMessage]); // Add user message to chat
-    setValue(""); // Clear input
-    setShowSuggestions(false); // Hide suggestions after first message
+    setSessionData([...sessionData, value]);
+    setMessages((prev) => [...prev, userMessage]);
+    setValue("");
+    setShowSuggestions(false);
+    
+    // ✅ Ensure "Keep Prompting" button appears after the first message
+    if (!showKeepPrompting) {
+      console.log("✅ First message sent. Showing 'Keep Prompting' button...");
+      setShowKeepPrompting(true);
+    }
 
     try {
       const response = await fetch("http://localhost:5000/keep_prompting", {
@@ -56,9 +62,28 @@ const ChatInterface = () => {
 
       const data = await response.json();
       const aiResponse = { text: data.prompts.join("\n"), sender: "AI" };
-      setMessages((prev) => [...prev, aiResponse]); // Add AI response to chat
+      setMessages((prev) => [...prev, aiResponse]);
     } catch (error) {
       console.error("Error fetching AI response:", error);
+    }
+  };
+
+  // Handle "Keep Prompting" button click
+  const handleKeepPrompting = async () => {
+    console.log("📢 'Keep Prompting' button clicked!");
+
+    try {
+      const response = await fetch("http://localhost:5000/keep_prompting", {
+        method: "POST",
+        body: JSON.stringify({ currentTextData: sessionData.join(" ") }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await response.json();
+      const aiResponse = { text: data.prompts.join("\n"), sender: "AI" };
+      setMessages((prev) => [...prev, aiResponse]);
+    } catch (error) {
+      console.error("Error fetching more prompts:", error);
     }
   };
 
@@ -84,7 +109,7 @@ const ChatInterface = () => {
         headers: { "Content-Type": "application/json" },
       });
       const data = await response.json();
-      alert(data.message); // Show success message
+      alert(data.message);
     } catch (error) {
       console.error("Error saving journal:", error);
     }
@@ -133,6 +158,15 @@ const ChatInterface = () => {
           Save Journal
         </button>
       </div>
+
+      {/* "Keep Prompting" Button */}
+      {showKeepPrompting && (
+        <div className="keep-prompting-container">
+          <button className="keep-prompting" onClick={handleKeepPrompting}>
+            Keep Prompting
+          </button>
+        </div>
+      )}
     </div>
   );
 };
