@@ -1,9 +1,15 @@
 import '../entries.css';
 import React from 'react';
 import Data from '../entries.json';
-
+import { useNavigate } from 'react-router-dom';
 
 function FetchData() {
+  const navigate = useNavigate();
+
+  const handleEntryClick = (entryId) => {
+    navigate(`/entry/${entryId}`);
+  };
+
   return (
     <div className="entries-container">
       <h1>Your Journal Entries</h1>
@@ -13,34 +19,20 @@ function FetchData() {
         <p>Had a great day walking in the park.</p>
       </div>
 
-      
-
       <div className="button-container">
-      <button className="entry-button">
-      <img src="client/src/images/paper.png" alt="icon" />Button 1</button>
-      <button className="entry-button">Button 2</button>
-      <button className="entry-button">Button 3</button>
-      <button className="entry-button">Button 4</button>
-      <button className="entry-button">Button 5</button>
-      <button className="entry-button">Button 6</button>
-      <button className="entry-button">Button 7</button>
-      <button className="entry-button">Button 7</button>
-      <button className="entry-button">Button 7</button>
-</div>
-
-      <div className="test">
-        <div className="posts">
-          {Data.map((post) => {
-            return (
-              <div key={post.id}>
-                <h4>{post.title}</h4>
-                <p>{post.content}</p>
-              </div>
-            );
-          })}
-        </div>
+        {Data.map((entry) => (
+          <button
+            key={entry.id}
+            className="entry-button"
+            onClick={() => handleEntryClick(entry.id)}
+          >
+            <img src="client/src/images/paper.png" alt="icon" />
+            {entry.date}
+          </button>
+        ))}
       </div>
     </div>
   );
 }
+
 export default FetchData;
