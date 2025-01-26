@@ -94,7 +94,7 @@ def summarize_text(text):
         response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "Your job is to simply summarize the text you are given."},
+                {"role": "system", "content": "Your job is to summarize the text you are given. Format it like you are talking to the person, so language like 'you said you....' type of thing."},
                 {"role": "user", "content": f"Summarize the following text:\n{text}"}
             ],
             temperature=0.7
@@ -115,7 +115,7 @@ def analyze_sentiment(text):
                     "role": "system",
                     "content": "You are an assistant that performs sentiment analysis. "
                                "Classify the sentiment of the text into one of these emotions: "
-                               "happy, sad, scared, angry, depressed, frustrated. Return only the emotion."
+                               "Happy, Very Happy, Excited, Sad, Scared, Angry, Depressed, Frustrated. Return only the emotion"
                 },
                 {
                     "role": "user",
