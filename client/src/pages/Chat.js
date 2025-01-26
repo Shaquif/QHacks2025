@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ChatInterface = () => {
-  const [value, setValue] = useState(""); // Stores user input
-  const [messages, setMessages] = useState([]); // Stores chat messages
-  const [sessionData, setSessionData] = useState([]); // Stores conversation history
-  const [suggestions, setSuggestions] = useState([]); // Stores initial prompts
-  const [showSuggestions, setShowSuggestions] = useState(true); // Controls visibility of suggestions
-  const [showKeepPrompting, setShowKeepPrompting] = useState(false); // Controls visibility of "Keep Prompting"
-  const [selectedSuggestion, setSelectedSuggestion] = useState(null); // Stores clicked suggestion
+  const navigate = useNavigate();
+  const [value, setValue] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [sessionData, setSessionData] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestions, setShowSuggestions] = useState(true);
+  const [showKeepPrompting, setShowKeepPrompting] = useState(false);
+  const [selectedSuggestion, setSelectedSuggestion] = useState(null);
 
   useEffect(() => {
     fetchInitialPrompts();
@@ -54,6 +56,11 @@ const ChatInterface = () => {
   const handleKeepPrompting = async () => {
     console.log("📢 'Keep Prompting' button clicked!");
 
+    // If there is text in the input field, submit it first before prompting AI
+    if (value.trim()) {
+      handleSendMessage();
+    }
+
     try {
       const updatedSession = sessionData.join(" ");
 
@@ -83,20 +90,10 @@ const ChatInterface = () => {
     }
   };
 
-  // Click on a suggestion → fade out others (Top-down effect)
-  const handleSuggestionClick = (suggestion) => {
-    setSelectedSuggestion(suggestion);
-    setValue(suggestion);
-  };
-
-  // Click back arrow → reset all suggestions
   const handleBackClick = () => {
-    setSelectedSuggestion(null);
-    setShowSuggestions(true);
-    fetchInitialPrompts();
+    navigate("/entries");
   };
 
-  // Save the journal log
   const handleSaveJournal = async () => {
     try {
       const response = await fetch("http://localhost:5000/save_journal", {
@@ -128,7 +125,7 @@ const ChatInterface = () => {
             <div 
               key={index} 
               className={`suggestion ${selectedSuggestion && selectedSuggestion !== suggestion ? "fade-out" : ""}`} 
-              onClick={() => handleSuggestionClick(suggestion)}
+              onClick={() => setValue(suggestion)}
             >
               {suggestion}
             </div>
@@ -145,7 +142,7 @@ const ChatInterface = () => {
         ))}
       </div>
 
-      {/* Input Section */}
+      {/* Input Section with Buttons on the Right */}
       <div className="bottom-section">
         <input
           type="text"
@@ -156,8 +153,8 @@ const ChatInterface = () => {
           className="chat-input"
         />
 
-        {/* Buttons Section (Side by Side) */}
-        <div className="button-container">
+        {/* Buttons Aligned Bottom-Right */}
+        <div className="chat-button-container">
           <button className="save-journal" onClick={handleSaveJournal}>
             Save Journal
           </button>
