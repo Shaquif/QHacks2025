@@ -73,7 +73,7 @@ h1 {
 .entry-date {
   font-size: 1.1rem;
   font-weight: bold;
-  color: #222;
+  color: white;
 }
 
 /* Fix icon positioning */
@@ -85,7 +85,7 @@ h1 {
 
 /* New Entry Button Styling */
 .new-entry-card {
-  background-color: #d3d3d3; /* Gray background */
+  background-color: #e9e8e8; /* Gray background */
   display: flex;
   align-items: center;
   justify-content: center;

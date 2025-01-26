@@ -19,7 +19,7 @@ function Entries() {
     };
 
     const handleNewEntryClick = () => {
-        navigate('/entry/new'); // Navigate to new entry creation page
+        navigate('/chat'); // Navigate to the chat page
     };
 
     const formatDate = (dateString) => {
