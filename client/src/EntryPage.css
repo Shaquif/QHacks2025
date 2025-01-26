@@ -5,11 +5,12 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
+  height: 80vh;
 }
 
 .entry-content-box {
-  width: 60%;
-  max-width: 800px;
+  width: 80%;
+  max-width: 2000px;
   height: 400px;
   overflow-y: auto;
   padding: 20px;
