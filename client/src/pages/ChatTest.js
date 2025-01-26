@@ -37,57 +37,50 @@ const ChatInterface = () => {
     }
   };
 
-  // Handle sending a message
-  const handleSendMessage = async () => {
+  // Handle sending a message (Only stores user message, does NOT call AI)
+  const handleSendMessage = () => {
     if (!value.trim()) return;
 
     const userMessage = { text: value, sender: "User" };
-    setSessionData([...sessionData, value]);
-    setMessages((prev) => [...prev, userMessage]);
-    setValue("");
-    setShowSuggestions(false);
-    
-    // ✅ Ensure "Keep Prompting" button appears after the first message
+    setSessionData((prevSessionData) => [...prevSessionData, value]); // Store user entry
+    setMessages((prev) => [...prev, userMessage]); // Add user message to chat
+    setValue(""); // Clear input
+    setShowSuggestions(false); // Hide suggestions after first message
+
+    // ✅ Show "Keep Prompting" button after first message
     if (!showKeepPrompting) {
-      console.log("✅ First message sent. Showing 'Keep Prompting' button...");
       setShowKeepPrompting(true);
-    }
-
-    try {
-      const response = await fetch("http://localhost:5000/keep_prompting", {
-        method: "POST",
-        body: JSON.stringify({ currentTextData: sessionData.join(" ") }),
-        headers: { "Content-Type": "application/json" },
-      });
-
-      const data = await response.json();
-      const aiResponse = { text: data.prompts.join("\n"), sender: "AI" };
-      setMessages((prev) => [...prev, aiResponse]);
-    } catch (error) {
-      console.error("Error fetching AI response:", error);
     }
   };
 
-  // Handle "Keep Prompting" button click
+  // Handle "Keep Prompting" button click (Fetch AI response once per click)
   const handleKeepPrompting = async () => {
     console.log("📢 'Keep Prompting' button clicked!");
 
     try {
+      const updatedSession = sessionData.join(" "); // Use latest session data
+
       const response = await fetch("http://localhost:5000/keep_prompting", {
         method: "POST",
-        body: JSON.stringify({ currentTextData: sessionData.join(" ") }),
+        body: JSON.stringify({ currentTextData: updatedSession }),
         headers: { "Content-Type": "application/json" },
       });
 
       const data = await response.json();
-      const aiResponse = { text: data.prompts.join("\n"), sender: "AI" };
-      setMessages((prev) => [...prev, aiResponse]);
+
+      if (data.prompts && Array.isArray(data.prompts)) {
+        // ✅ Ensure only ONE AI response is added per click (max 3 prompts)
+        const aiResponse = { text: data.prompts.slice(0, 3).join("\n"), sender: "AI" };
+        setMessages((prev) => [...prev, aiResponse]);
+      } else {
+        console.error("Invalid AI response:", data);
+      }
     } catch (error) {
       console.error("Error fetching more prompts:", error);
     }
   };
 
-  // Handle pressing Enter
+  // Handle pressing Enter (Only sends user message, does NOT call AI)
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -95,7 +88,7 @@ const ChatInterface = () => {
     }
   };
 
-  // Handle clicking a suggestion
+  // Handle clicking a suggestion (Auto-fills input field)
   const handleSuggestionClick = (suggestion) => {
     setValue(suggestion);
   };
@@ -154,19 +147,19 @@ const ChatInterface = () => {
           onKeyDown={handleKeyDown}
           className="chat-input"
         />
-        <button className="save-journal" onClick={handleSaveJournal}>
-          Save Journal
-        </button>
-      </div>
 
-      {/* "Keep Prompting" Button */}
-      {showKeepPrompting && (
-        <div className="keep-prompting-container">
-          <button className="keep-prompting" onClick={handleKeepPrompting}>
-            Keep Prompting
+        {/* Buttons Section (Side by Side) */}
+        <div className="button-container">
+          <button className="save-journal" onClick={handleSaveJournal}>
+            Save Journal
           </button>
+          {showKeepPrompting && (
+            <button className="keep-prompting" onClick={handleKeepPrompting}>
+              Keep Prompting
+            </button>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
