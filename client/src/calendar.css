@@ -1,5 +1,5 @@
 .calendar-container {
-    max-width: 400px;
+    max-width: 600px;
     margin: auto;
     text-align: center;
     background: white;
@@ -10,9 +10,35 @@
   .react-calendar {
     border: none;
     font-family: Arial, sans-serif;
+    width: 1000px;
+    height: 100%;
+    margin: auto;
+    
+    
+    
   }
   .react-calendar__tile--active {
     background: #4caf50 !important;
     color: white !important;
+    
   }
   
+  .react-calendar__tile:hover {
+    background: #bebebe !important;
+    cursor: pointer;
+  }
+
+  .react-calendar__tile{
+    height: 80px;
+    width: 80px;
+  }
+
+  .react-calendar__navigation {
+    width:100%
+  }
+
+  .react-calendar__navigation__label {
+    width: 300px;
+    text-align: center;
+    display: block;
+  }
