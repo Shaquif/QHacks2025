@@ -142,15 +142,7 @@ def save_journal():
         summary = summarize_text(conversation_data)
         sentiment = analyze_sentiment(conversation_data)
 
-        # Add timestamp and processed data to the log
-        log_entry = {
-            "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-            "conversation": conversation_data,
-            "summary": summary,
-            "sentiment": sentiment
-        }
-
-        # Save to a JSON file
+         # Save to a JSON file
         log_file = "journal_logs.json"
 
         if os.path.exists(log_file):
@@ -159,12 +151,23 @@ def save_journal():
         else:
             logs = []
 
+        next_id = 1 if not logs else logs[-1].get("id", 0) + 1
+
+        # Add timestamp and processed data to the log
+        log_entry = {
+            "id": next_id,
+            "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "conversation": conversation_data,
+            "summary": summary,
+            "sentiment": sentiment
+        }
+
         logs.append(log_entry)
 
         with open(log_file, "w") as file:
             json.dump(logs, file, indent=4)
 
-        return jsonify({"message": "Journal log saved successfully."})
+        return jsonify({"message": "Journal log saved successfully.", "id": next_id})
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
