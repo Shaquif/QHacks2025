@@ -63,7 +63,7 @@
   }
   
   .chat-input {
-    width: 100%;
+    width: 60%;
     padding: 12px;
     border: none;
     border-radius: 10px;
@@ -72,27 +72,6 @@
     outline: none;
   }
   
-  /* Bottom Navigation */
-  .bottom-nav {
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-    background: white;
-    border-top: 1px solid lightgray;
-  }
-  
-  .nav-item {
-    text-align: center;
-    font-size: 14px;
-    color: gray;
-    padding: 10px 15px;
-    cursor: pointer;
-  }
-  
-  .nav-item.active {
-    color: blue;
-    font-weight: bold;
-  }
 
   /* Chat Container */
 .chat-container {
@@ -109,7 +88,7 @@
   /* Bottom Section (Input & Buttons) */
   .bottom-section {
     position: fixed;
-    bottom: 70px; /* Ensures input is above navbar */
+    bottom: 130px; /* Ensures input is above navbar */
     left: 0;
     width: 100%;
     display: flex;
@@ -139,16 +118,3 @@
     margin-left: 10px;
   }
   
-  /* Navbar */
-  .nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: white;
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-    border-top: 1px solid lightgray;
-    z-index: 10; /* Ensures navbar is below input box */
-  }

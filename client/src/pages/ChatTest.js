@@ -56,19 +56,6 @@ const ChatInterface = () => {
         <h1>What's on your mind?</h1>
       </div>
 
-      {/* Starting Suggestions */}
-      <div className="suggestions-container">
-        <h2>Starting Suggestions:</h2>
-        {suggestions.map((suggestion, index) => (
-          <button
-            key={index}
-            className="suggestion-button"
-            onClick={() => handleSuggestionClick(suggestion)}
-          >
-            {suggestion}
-          </button>
-        ))}
-      </div>
 
       {/* Input Section with Right-Aligned Buttons */}
       <div className="bottom-section">
