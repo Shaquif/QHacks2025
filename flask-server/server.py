@@ -171,6 +171,14 @@ def save_journal():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+
+@app.route('/flask-server/journal_logs.json')
+def get_logs():
+    import json
+    with open('journal_logs.json') as f:
+        data = json.load(f)
+    return jsonify(data)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)

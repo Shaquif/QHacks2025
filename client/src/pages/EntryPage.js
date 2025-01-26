@@ -1,25 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Data from '../entries.json'; // Make sure this file exists
-import '../EntryPage.css'; // Ensure correct import path
+import '../EntryPage.css';
 
 function EntryPage() {
-  const { id } = useParams();
-  const entry = Data.find((post) => post.id === Number(id));
+    const { id } = useParams();
+    const [entry, setEntry] = useState(null);
 
-  if (!entry) {
-    return <h2>Entry not found</h2>;
-  }
+    useEffect(() => {
+        fetch('/flask-server/journal_logs.json')
+            .then(response => response.json())
+            .then(data => {
+                const foundEntry = data.find((post) => post.id === Number(id));
+                setEntry(foundEntry);
+            })
+            .catch(error => console.error('Error fetching JSON data:', error));
+    }, [id]);
 
-  return (
-    <div className="entry-page">
-      <h1>{entry.date}</h1>
-      <h2>{entry.title}</h2>
-      <div className="entry-content-box">
-        <p>{entry.content}</p>
-      </div>
-    </div>
-  );
+    if (!entry) {
+        return <h2>Entry not found</h2>;
+    }
+
+    return (
+        <div className="entry-page">
+            <h1>{entry.date}</h1>
+            <h2>{entry.summary}</h2>
+            <div className="entry-content-box">
+                {entry.conversation.map((line, index) => (
+                    <p key={index}>{line}</p>
+                ))}
+            </div>
+        </div>
+    );
 }
 
 export default EntryPage;

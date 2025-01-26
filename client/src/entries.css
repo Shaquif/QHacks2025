@@ -1,78 +1,107 @@
-.entries-container {
-  padding: 20px;
-  max-width: 80%;
-  margin: 0 auto;
-}
-
-.entry-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 16px;
-  background-color: #f9f9f9;
-}
-
-.entry-card h3 {
-  font-size: 1.2rem;
-  color: #333;
-}
-
-.entry-card p {
-  font-size: 1rem;
-  color: #666;
-}
-
-.add-entry-btn {
-  display: inline-block;
-  padding: 10px 16px;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
+/* General Page Styling */
+.entries-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
+  padding: 20px;
+  height: 90vh;
 }
 
-.add-entry-btn:hover {
-  background-color: #0056b3;
+/* Header Styling */
+h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 30px;
 }
 
-/* Container for all buttons */
-.button-container {
+/* Container for Entries */
+.entries-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+}
+
+/* Entries Grid */
+.entries-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;  /* Adjust spacing between buttons */
-  justify-content: center;  /* Center buttons horizontally */
+  justify-content: flex-start; /* Aligns items to the left */
+  gap: 20px;
+  max-width: 1100px;
+  padding-left: 20px; /* Adds padding to maintain alignment */
 }
 
-
-/* Style for each entry button */
-.entry-button {
-  display: flex;            
-  flex-direction: column;    /* Stack icon and text vertically */
-  align-items: center;       /* Center horizontally */
-  justify-content: center;   /* Center vertically */
+/* Entry Cards */
+.entry-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 180px;
+  height: 250px;
+  padding: 15px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
   text-align: center;
-  width: 150px;              /* Adjust width */
-  height: 180px;             /* Adjust height */
-  border: none;
-  border-radius: 15px;
-  background-color: #9bb2f6;
   cursor: pointer;
-  padding: 10px;
+  text-decoration: none;
+  border: none;
 }
 
-.entry-button img {
+/* Entry Card Hover Effect */
+.entry-card:hover {
+  transform: scale(1.05);
+}
+
+/* Background Colors (Alternate Colors for Each Entry) */
+.entry-card {
+  background-color: #6972F0;
+}
+
+/* Entry Icon */
+.entry-icon {
   width: 50px;
   height: 50px;
   margin-bottom: 10px;
-  
 }
-  
-/* Style for the date text */
+
+/* Entry Date (Only Element Visible) */
 .entry-date {
-  font-size: 16px;
+  font-size: 1.1rem;
   font-weight: bold;
-  color: black;
-  text-align: center;
+  color: #222;
+}
+
+/* Fix icon positioning */
+.entry-icon {
+  margin-right: 0px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+}
+
+/* New Entry Button Styling */
+.new-entry-card {
+  background-color: #d3d3d3; /* Gray background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+  border: none;
+}
+
+.new-entry-card:hover {
+  background-color: #b0b0b0; /* Slightly darker gray on hover */
+  transform: scale(1.05);
+}
+
+/* Center the plus sign */
+.new-entry-plus {
+  font-size: 10rem;
+  font-weight: bold;
 }
