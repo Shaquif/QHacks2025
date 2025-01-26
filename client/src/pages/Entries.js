@@ -2,22 +2,18 @@ import '../entries.css';
 import React from 'react';
 import Data from '../entries.json';
 import { useNavigate } from 'react-router-dom';
+import paperIcon from '../Images/paper.png';  // Import the image correctly
 
-function FetchData() {
+function Entries() {
   const navigate = useNavigate();
 
   const handleEntryClick = (entryId) => {
-    navigate(`/entry/${entryId}`);
+    navigate(`/entry/${entryId}`); // Navigate to specific entry
   };
 
   return (
     <div className="entries-container">
       <h1>Your Journal Entries</h1>
-
-      <div className="entry-card">
-        <h3>January 24, 2025</h3>
-        <p>Had a great day walking in the park.</p>
-      </div>
 
       <div className="button-container">
         {Data.map((entry) => (
@@ -26,8 +22,8 @@ function FetchData() {
             className="entry-button"
             onClick={() => handleEntryClick(entry.id)}
           >
-            <img src="client/src/images/paper.png" alt="icon" />
-            {entry.date}
+            <img src={paperIcon} alt="icon" className="entry-icon" />
+            <p className="entry-date">{entry.date}</p> {/* Display Date */}
           </button>
         ))}
       </div>
@@ -35,4 +31,4 @@ function FetchData() {
   );
 }
 
-export default FetchData;
+export default Entries;

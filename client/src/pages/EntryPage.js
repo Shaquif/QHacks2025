@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import Data from '../entries.json';
+import '../EntryPage.css';
 
 function EntryPage() {
   const { id } = useParams();
@@ -14,7 +15,9 @@ function EntryPage() {
     <div className="entry-page">
       <h1>{entry.date}</h1>
       <h2>{entry.title}</h2>
-      <p>{entry.content}</p>
+      <div className="entry-content-box">
+        <p>{entry.content}</p>
+      </div>
     </div>
   );
 }
