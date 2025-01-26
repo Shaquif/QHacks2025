@@ -10,7 +10,6 @@ from openai import OpenAI
 load_dotenv()  
 openai_api_key = "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"
 
-
 client = OpenAI(api_key=openai_api_key)
 
 app = Flask(__name__)
@@ -48,7 +47,7 @@ def keep_prompting():
         current_text_data = data.get("currentTextData", "")
 
         # Call OpenAI API to generate new prompts
-        response = client.chat.completion.create(
+        response = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "Provide three journal prompts related to the given text."},
@@ -80,7 +79,6 @@ def start_conversation():
         )
 
         # Extract structured JSON response
-        #json_response = json.loads(response["choices"][0]["message"]["content"])
         json_response = response.choices[0].message.content
 
         return jsonify(json_response)
