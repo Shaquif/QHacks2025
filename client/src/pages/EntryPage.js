@@ -22,10 +22,18 @@ function EntryPage() {
 
     return (
         <div className="entry-page">
+            <h1 className="h1Entry">Entry Page: #{entry.id}</h1>
             <h1>{entry.date}</h1>
-            <h2>Summary: {entry.summary}</h2>
-            <p className="entry-sentiment">Mood: {entry.sentiment}</p>
+
+            {/* Entry Content Box Now Includes Summary */}
             <div className="entry-content-box">
+                <h2>Summary:</h2>
+                <p>{entry.summary}</p>
+
+                <h2>Mood:</h2>
+                <p>{entry.sentiment}</p>
+
+                <h2>Full Conversation:</h2>
                 {entry.conversation.map((line, index) => (
                     <p key={index}>{line}</p>
                 ))}
