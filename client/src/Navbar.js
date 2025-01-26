@@ -15,6 +15,9 @@ export default function Navbar() {
       <ul className="calendar">
       <CustomLink to="/calendar"><div className="navLink"><div className="icon"><FontAwesomeIcon icon={faCalendarDays} size="xl"/></div><span>Calendar</span></div></CustomLink>
       </ul>
+      <ul className="chatTest">
+      <CustomLink to="/chatTest"><div className="navLink"><div className="icon"><FontAwesomeIcon icon={faCalendarDays} size="xl"/></div><span>ChatTest</span></div></CustomLink>
+      </ul>
     </nav>
   )
 }
