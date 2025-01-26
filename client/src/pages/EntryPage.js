@@ -22,7 +22,9 @@ function EntryPage() {
 
     return (
         <div className="entry-page">
-            <h1 className="h1Entry">Entry Page: #{entry.id}</h1>
+            <div className="h1Entry">
+            <h1>Entry Page: #{entry.id}</h1>
+            </div>
             <h1>{entry.date}</h1>
 
             {/* Entry Content Box Now Includes Summary */}
