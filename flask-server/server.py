@@ -13,7 +13,7 @@ openai_api_key = "sk-proj-kzhBM_59lS2ryFb-JAHKlMpYj0PoKeqgq289TquyIswlIrduXL08Rp
 client = OpenAI(api_key=openai_api_key)
 
 app = Flask(__name__)
-CORS(app)  # Enable Cross-Origin Requests
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 # Test endpoint
 @app.route("/members")
@@ -81,7 +81,7 @@ def start_conversation():
         # Extract structured JSON response
         json_response = response.choices[0].message.content
 
-        return jsonify(json_response)
+        return jsonify(json.loads(json_response))
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500

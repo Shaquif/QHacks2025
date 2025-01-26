@@ -14,27 +14,28 @@ const ChatInterface = () => {
 
   const fetchInitialPrompts = async () => {
     try {
-      const response = await fetch("http://localhost:5000/start_conversation", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-      });
+        const response = await fetch("http://localhost:5000/start_conversation", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+        });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-      const data = await response.json(); // Parse JSON response
-      console.log("API Response:", data); // Debugging
+        const data = await response.json(); // ✅ Ensure JSON is properly parsed
+        console.log("API Response:", data); // 🔍 Debugging
 
-      if (data.startingPrompts && data.startingPrompts.entry) {
-        setSuggestions(data.startingPrompts.entry); // ✅ Correctly update state
-      } else {
-        console.error("Invalid API response structure", data);
-      }
+        // ✅ Fix: Correctly extract the entry array
+        if (data && data.startingPrompts && Array.isArray(data.startingPrompts.entry)) {
+            setSuggestions([...data.startingPrompts.entry]); // ✅ Update state correctly
+        } else {
+            console.error("❌ Invalid API response structure", JSON.stringify(data, null, 2));
+        }
     } catch (error) {
-      console.error("Error fetching initial prompts:", error);
+        console.error("❌ Error fetching initial prompts:", error);
     }
-  };
+};
 
   // Handle sending a message
   const handleSendMessage = async () => {
