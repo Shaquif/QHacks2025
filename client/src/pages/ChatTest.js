@@ -2,50 +2,81 @@ import React, { useState, useEffect } from "react";
 
 const ChatInterface = () => {
   const [value, setValue] = useState(""); // Stores user input
-  const [suggestions, setSuggestions] = useState([]); // Stores starting suggestions
-  const [dynamicPrompts, setDynamicPrompts] = useState([]); // Stores new prompts from "Keep Prompting"
+  const [messages, setMessages] = useState([]); // Stores chat messages
+  const [sessionData, setSessionData] = useState([]); // Stores conversation history
+  const [suggestions, setSuggestions] = useState([]); // Stores initial prompts
+  const [showSuggestions, setShowSuggestions] = useState(true); // Controls visibility of suggestions
 
-  // Fetch starting suggestions when the component loads
+  // Fetch initial prompts when the page loads
   useEffect(() => {
-    fetchSuggestions();
+    fetchInitialPrompts();
   }, []);
 
-  // Fetch initial suggestions from the backend
-  const fetchSuggestions = async () => {
+  const fetchInitialPrompts = async () => {
     try {
-      const response = await fetch("http://localhost:5000/suggestions");
-      const data = await response.json();
-      setSuggestions(data.suggestions);
-    } catch (error) {
-      console.error("Error fetching suggestions:", error);
-    }
-  };
-
-  // Fetch new prompts when "Keep Prompting" is clicked
-  const fetchNewPrompts = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/prompting", {
+      const response = await fetch("http://localhost:5000/start_conversation", {
         method: "POST",
-        body: JSON.stringify({ currentTextData: value }),
         headers: { "Content-Type": "application/json" },
       });
 
       const data = await response.json();
-      setDynamicPrompts(data.prompts);
+      setSuggestions(data.startingPrompts.entry); // Access the correct JSON structure
     } catch (error) {
-      console.error("Error fetching new prompts:", error);
+      console.error("Error fetching initial prompts:", error);
     }
   };
 
-  // Handle clicking a suggestion (auto-fills input)
+  // Handle sending a message
+  const handleSendMessage = async () => {
+    if (!value.trim()) return; // Ignore empty input
+
+    const userMessage = { text: value, sender: "User" };
+    setSessionData([...sessionData, value]); // Append user input to sessionData
+    setMessages((prev) => [...prev, userMessage]); // Add user message to chat
+    setValue(""); // Clear input
+    setShowSuggestions(false); // Hide suggestions after first message
+
+    try {
+      const response = await fetch("http://localhost:5000/keep_prompting", {
+        method: "POST",
+        body: JSON.stringify({ currentTextData: sessionData.join(" ") }),
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const data = await response.json();
+      const aiResponse = { text: data.prompts.join("\n"), sender: "AI" };
+      setMessages((prev) => [...prev, aiResponse]); // Add AI response to chat
+    } catch (error) {
+      console.error("Error fetching AI response:", error);
+    }
+  };
+
+  // Handle pressing Enter
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSendMessage();
+    }
+  };
+
+  // Handle clicking a suggestion
   const handleSuggestionClick = (suggestion) => {
     setValue(suggestion);
   };
 
-  // Handle finishing journal entry
-  const finishEntry = () => {
-    setValue("");
-    setDynamicPrompts([]);
+  // Save the journal log
+  const handleSaveJournal = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/save_journal", {
+        method: "POST",
+        body: JSON.stringify({ conversationData: sessionData }),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await response.json();
+      alert(data.message); // Show success message
+    } catch (error) {
+      console.error("Error saving journal:", error);
+    }
   };
 
   return (
@@ -56,28 +87,49 @@ const ChatInterface = () => {
         <h1>What's on your mind?</h1>
       </div>
 
+      {/* Starting Suggestions (Hidden after first message) */}
+      {showSuggestions && (
+        <div className="suggestions">
+          <p className="suggestion-title">Starting Suggestions:</p>
+          {suggestions.map((suggestion, index) => (
+            <div key={index} className="suggestion" onClick={() => handleSuggestionClick(suggestion)}>
+              {suggestion}
+            </div>
+          ))}
+        </div>
+      )}
 
-      {/* Input Section with Right-Aligned Buttons */}
+      {/* Chat Messages */}
+      <div className="chat-messages">
+        {messages.map((msg, index) => (
+          <div key={index} className={`message ${msg.sender}`}>
+            {msg.text}
+          </div>
+        ))}
+      </div>
+
+      {/* Input Section */}
       <div className="bottom-section">
-        {/* Text Input */}
         <input
-            type="text"
-            placeholder="Write here..."
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            className="chat-input"
+          type="text"
+          placeholder="Write here..."
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          className="chat-input"
         />
+        <button className="save-journal" onClick={handleSaveJournal}>
+          Save Journal
+        </button>
+      </div>
 
-        {/* Buttons (Right-Aligned) */}
-        <div className="button-container">
-            <button className="keep-prompting" onClick={fetchNewPrompts}>
-            Keep Prompting
-            </button>
-            <button className="finish-entry" onClick={finishEntry}>
-            Finish Entry
-            </button>
-        </div>
-        </div>
+      {/* Bottom Navigation Bar */}
+      <div className="bottom-nav">
+        <div className="nav-item">Chat</div>
+        <div className="nav-item">AI Assistants</div>
+        <div className="nav-item">History</div>
+        <div className="nav-item">Account</div>
+      </div>
     </div>
   );
 };

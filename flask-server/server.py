@@ -1,14 +1,17 @@
 from flask import Flask, request, jsonify
-import openai
 from flask_cors import CORS
 import os
 import json
 from datetime import datetime
 from dotenv import load_dotenv
+from openai import OpenAI
 
 # Load API key from .env file
-load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+load_dotenv()  
+openai_api_key = "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"
+
+
+client = OpenAI(api_key=openai_api_key)
 
 app = Flask(__name__)
 CORS(app)  # Enable Cross-Origin Requests
@@ -45,8 +48,8 @@ def keep_prompting():
         current_text_data = data.get("currentTextData", "")
 
         # Call OpenAI API to generate new prompts
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
+        response = client.chat.completion.create(
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "Provide three journal prompts related to the given text."},
                 {"role": "user", "content": current_text_data}
@@ -63,22 +66,24 @@ def keep_prompting():
         return jsonify({"error": str(e)}), 500
 
 # Start Conversation Endpoint
-@app.route("/start_conversation", methods=["POST"])
+@app.route("/start_conversation", methods=["GET","POST"])
 def start_conversation():
     try:
-        # Start the journaling session
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
+        # Call OpenAI API with a clear request for JSON-formatted output
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "You are a helpful assistant for journaling. Start by providing three initial prompts."}
+                {"role": "system", "content": "You are an AI designed for journaling assistance. Respond with exactly three journal prompts formatted as JSON: {startingPrompts: {entry: [\"prompt1\", \"prompt2\", \"prompt3\"]}}."}
             ],
-            max_tokens=100
+            max_tokens=100,
+            response_format={"type": "json_object"}  # Ensure JSON output
         )
 
-        # Extract prompts from API response
-        prompts = response["choices"][0]["message"]["content"].strip().split("\n")
+        # Extract structured JSON response
+        #json_response = json.loads(response["choices"][0]["message"]["content"])
+        json_response = response.choices[0].message.content
 
-        return jsonify({"prompts": prompts[:3]})
+        return jsonify(json_response)
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
