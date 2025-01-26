@@ -72,8 +72,13 @@ const ChatInterface = () => {
       const data = await response.json();
 
       if (data.prompts && Array.isArray(data.prompts)) {
-        const aiResponse = { text: data.prompts.slice(0, 3).join("\n"), sender: "AI" };
-        setMessages((prev) => [...prev, aiResponse]);
+        // Add each prompt as a separate AI message
+        const newMessages = data.prompts.slice(0, 3).map(prompt => ({
+          text: prompt,
+          sender: "AI"
+        }));
+
+        setMessages((prev) => [...prev, ...newMessages]); // Append messages separately
       } else {
         console.error("Invalid AI response:", data);
       }
@@ -149,7 +154,7 @@ const ChatInterface = () => {
       <div className="bottom-section">
         <input
           type="text"
-          placeholder="Press enter to submit message:"
+          placeholder="Write here..."
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -164,7 +169,7 @@ const ChatInterface = () => {
             </button>
           )}
           <button className="save-journal" onClick={handleSaveJournal}>
-            Finish Journal
+            Save Journal
           </button>
         </div>
       </div>

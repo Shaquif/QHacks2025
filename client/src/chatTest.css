@@ -95,7 +95,8 @@ body {
 .chat-messages {
     flex-grow: 1;
     overflow-y: auto;
-    padding: 20px;
+    padding-left: 200px;
+    padding-right: 200px;
     display: flex;
     flex-direction: column;
 }
@@ -115,8 +116,8 @@ body {
 /* User Messages */
 .message.User {
     align-self: flex-start;
-    background-color: #f1f1f1;
-    color: black;
+    background-color: #6972F0;
+    color: white;
     text-align: left;
     padding: 12px;
     border-radius: 15px;
@@ -127,15 +128,76 @@ body {
 /* AI Messages */
 .message.AI {
     align-self: flex-end;
-    background-color: #007bff;
-    color: white;
+    background-color: #f1f1f1;
+    color: black;
     text-align: right;
-    padding: 12px;
+    padding: 10px 14px;
     border-radius: 15px;
     max-width: 70%;
     margin: 5px;
+    opacity: 0; /* Initially invisible */
+    transform: translateY(10px) scale(0.95);
+    animation: fadeInMessage 0.4s ease-in-out forwards;
 }
 
+/* Animation for AI messages */
+@keyframes fadeInMessage {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* User Messages - Smooth appearance */
+.message.User {
+    align-self: flex-start;
+    background-color: #6972F0;
+    color: white;
+    text-align: left;
+    padding: 10px 14px;
+    border-radius: 15px;
+    max-width: 70%;
+    margin: 5px;
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+    animation: fadeInMessage 0.3s ease-in-out forwards;
+}
+
+/* Typing Animation for AI Messages */
+.typing-indicator {
+    align-self: flex-end;
+    background-color: #6972F0;
+    color: white;
+    padding: 10px 14px;
+    border-radius: 15px;
+    max-width: fit-content;
+    margin: 5px;
+    display: flex;
+    gap: 3px;
+    animation: fadeInMessage 0.3s ease-in-out forwards;
+}
+
+.typing-indicator span {
+    width: 6px;
+    height: 6px;
+    background-color: white;
+    border-radius: 50%;
+    animation: typingDots 1.5s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(1) { animation-delay: 0s; }
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+/* Typing Dots Animation */
+@keyframes typingDots {
+    0%, 100% { opacity: 0.3; transform: translateY(0px); }
+    50% { opacity: 1; transform: translateY(-3px); }
+}
 /* Bottom Section (Input & Buttons) */
 .bottom-section {
     width: 100%;
