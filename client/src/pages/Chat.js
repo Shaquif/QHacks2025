@@ -10,6 +10,7 @@ const ChatInterface = () => {
   const [showSuggestions, setShowSuggestions] = useState(true);
   const [showKeepPrompting, setShowKeepPrompting] = useState(false);
   const [selectedSuggestion, setSelectedSuggestion] = useState(null);
+  const [isTyping, setIsTyping] = useState(false);
 
   useEffect(() => {
     fetchInitialPrompts();
@@ -60,6 +61,8 @@ const ChatInterface = () => {
       handleSendMessage();
     }
 
+    setIsTyping(true); // Show typing animation
+
     try {
       const updatedSession = sessionData.join(" ");
 
@@ -72,18 +75,23 @@ const ChatInterface = () => {
       const data = await response.json();
 
       if (data.prompts && Array.isArray(data.prompts)) {
-        // Add each prompt as a separate AI message
-        const newMessages = data.prompts.slice(0, 3).map(prompt => ({
-          text: prompt,
-          sender: "AI"
-        }));
+        // Simulate delay for typing effect
+        setTimeout(() => {
+          const newMessages = data.prompts.slice(0, 3).map(prompt => ({
+            text: prompt,
+            sender: "AI"
+          }));
 
-        setMessages((prev) => [...prev, ...newMessages]); // Append messages separately
+          setMessages((prev) => [...prev, ...newMessages]); // Append messages separately
+          setIsTyping(false); // Hide typing indicator
+        }, 1000); // Delay to simulate AI thinking time
       } else {
         console.error("Invalid AI response:", data);
+        setIsTyping(false);
       }
     } catch (error) {
       console.error("Error fetching more prompts:", error);
+      setIsTyping(false);
     }
   };
 
@@ -99,6 +107,10 @@ const ChatInterface = () => {
   };
 
   const handleSaveJournal = async () => {
+    if (value.trim()) {
+      handleSendMessage(); // Submit input field content first
+    }
+
     try {
       const response = await fetch("http://localhost:5000/save_journal", {
         method: "POST",
@@ -148,13 +160,20 @@ const ChatInterface = () => {
             {msg.text}
           </div>
         ))}
+        {isTyping && (
+          <div className="typing-indicator">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        )}
       </div>
 
       {/* Input Section */}
       <div className="bottom-section">
         <input
           type="text"
-          placeholder="Write here..."
+          placeholder="Press enter to submit entry into chat:"
           value={value}
           onChange={(e) => setValue(e.target.value)}
           onKeyDown={handleKeyDown}
