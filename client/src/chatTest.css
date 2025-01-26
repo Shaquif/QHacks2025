@@ -85,7 +85,7 @@
     align-items: center;
     padding: 10px 20px;
     background: white;
-    padding-bottom: 10px;
+    padding-bottom: px;
 }
 
 /* Chat input field */
@@ -152,6 +152,18 @@
     margin-bottom: 10px;
 }
 
+/* Suggestions */
+.suggestions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.suggestion-title {
+    color: gray;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
 /* Fade-in effect for suggestions */
 .suggestion {
     background: #f5f5f5;
@@ -162,10 +174,10 @@
     text-align: center;
     font-size: 16px;
     cursor: pointer;
-    transition: background 0.3s, opacity 0.5s ease-in-out;
-    
+    transition: background 0.3s, opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+
     opacity: 1;
-    transform: translateY(10px);
+    transform: translateY(0);
     animation: fadeInUp 0.5s ease-out forwards;
 }
 
@@ -174,14 +186,15 @@
 .suggestion:nth-child(2) { animation-delay: 0.4s; }
 .suggestion:nth-child(3) { animation-delay: 0.6s; }
 
-/* Fade-out animation */
+/* Top-down fade-out animation */
 .suggestion.fade-out {
     opacity: 0;
+    transform: translateY(20px);
     pointer-events: none;
 }
 
 @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 

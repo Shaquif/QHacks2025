@@ -7,8 +7,8 @@ const ChatInterface = () => {
   const [suggestions, setSuggestions] = useState([]); // Stores initial prompts
   const [showSuggestions, setShowSuggestions] = useState(true); // Controls visibility of suggestions
   const [showKeepPrompting, setShowKeepPrompting] = useState(false); // Controls visibility of "Keep Prompting"
+  const [selectedSuggestion, setSelectedSuggestion] = useState(null); // Stores clicked suggestion
 
-  // Fetch initial prompts when the page loads
   useEffect(() => {
     fetchInitialPrompts();
   }, []);
@@ -37,28 +37,25 @@ const ChatInterface = () => {
     }
   };
 
-  // Handle sending a message (Only stores user message, does NOT call AI)
   const handleSendMessage = () => {
     if (!value.trim()) return;
 
     const userMessage = { text: value, sender: "User" };
-    setSessionData((prevSessionData) => [...prevSessionData, value]); // Store user entry
-    setMessages((prev) => [...prev, userMessage]); // Add user message to chat
-    setValue(""); // Clear input
-    setShowSuggestions(false); // Hide suggestions after first message
+    setSessionData((prevSessionData) => [...prevSessionData, value]);
+    setMessages((prev) => [...prev, userMessage]);
+    setValue("");
+    setShowSuggestions(false);
 
-    // ✅ Show "Keep Prompting" button after first message
     if (!showKeepPrompting) {
       setShowKeepPrompting(true);
     }
   };
 
-  // Handle "Keep Prompting" button click (Fetch AI response once per click)
   const handleKeepPrompting = async () => {
     console.log("📢 'Keep Prompting' button clicked!");
 
     try {
-      const updatedSession = sessionData.join(" "); // Use latest session data
+      const updatedSession = sessionData.join(" ");
 
       const response = await fetch("http://localhost:5000/keep_prompting", {
         method: "POST",
@@ -69,7 +66,6 @@ const ChatInterface = () => {
       const data = await response.json();
 
       if (data.prompts && Array.isArray(data.prompts)) {
-        // ✅ Ensure only ONE AI response is added per click (max 3 prompts)
         const aiResponse = { text: data.prompts.slice(0, 3).join("\n"), sender: "AI" };
         setMessages((prev) => [...prev, aiResponse]);
       } else {
@@ -80,7 +76,6 @@ const ChatInterface = () => {
     }
   };
 
-  // Handle pressing Enter (Only sends user message, does NOT call AI)
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -88,9 +83,17 @@ const ChatInterface = () => {
     }
   };
 
-  // Handle clicking a suggestion (Auto-fills input field)
+  // Click on a suggestion → fade out others (Top-down effect)
   const handleSuggestionClick = (suggestion) => {
+    setSelectedSuggestion(suggestion);
     setValue(suggestion);
+  };
+
+  // Click back arrow → reset all suggestions
+  const handleBackClick = () => {
+    setSelectedSuggestion(null);
+    setShowSuggestions(true);
+    fetchInitialPrompts();
   };
 
   // Save the journal log
@@ -101,6 +104,7 @@ const ChatInterface = () => {
         body: JSON.stringify({ conversationData: sessionData }),
         headers: { "Content-Type": "application/json" },
       });
+
       const data = await response.json();
       alert(data.message);
     } catch (error) {
@@ -112,16 +116,20 @@ const ChatInterface = () => {
     <div className="chat-container">
       {/* Header Section */}
       <div className="header">
-        <span className="back-btn">←</span>
+        <span className="back-btn" onClick={handleBackClick}>←</span>
         <h1>What's on your mind?</h1>
       </div>
 
-      {/* Starting Suggestions (Fade-in effect applied) */}
+      {/* Starting Suggestions with fade effect */}
       {showSuggestions && suggestions.length > 0 && (
         <div className="suggestions">
           <p className="suggestion-title">Starting Suggestions:</p>
           {suggestions.map((suggestion, index) => (
-            <div key={index} className="suggestion" onClick={() => handleSuggestionClick(suggestion)}>
+            <div 
+              key={index} 
+              className={`suggestion ${selectedSuggestion && selectedSuggestion !== suggestion ? "fade-out" : ""}`} 
+              onClick={() => handleSuggestionClick(suggestion)}
+            >
               {suggestion}
             </div>
           ))}
