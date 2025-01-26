@@ -43,6 +43,34 @@ def test_journal():
 def keep_prompting():
     try:
         # Get user input from the frontend
+        data = request.get_json()
+        current_text_data = data.get("currentTextData", "")
+
+        # Call OpenAI API to generate new prompts
+        response = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "Provide three journal prompts related to the given text, formatted as JSON: {prompts: [\"prompt1\", \"prompt2\", \"prompt3\"]}."},
+                {"role": "user", "content": current_text_data}
+            ],
+            max_tokens=100,
+            response_format={"type": "json_object"}  # Ensure JSON output
+        )
+
+        # Extract structured JSON response
+        json_response = response.choices[0].message.content
+        parsed_response = json.loads(json_response)
+
+        return jsonify(parsed_response)
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+"""
+@app.route("/keep_prompting", methods=["POST"])
+def keep_prompting():
+    try:
+        # Get user input from the frontend
         data = request.json
         current_text_data = data.get("currentTextData", "")
 
@@ -63,6 +91,8 @@ def keep_prompting():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
+    """
 
 # Start Conversation Endpoint
 @app.route("/start_conversation", methods=["GET","POST"])
