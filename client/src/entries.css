@@ -1,51 +1,63 @@
-  .entries-container {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .entry-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 16px;
-    background-color: #f9f9f9;
-  }
-  
-  .entry-card h3 {
-    font-size: 1.2rem;
-    color: #333;
-  }
-  
-  .entry-card p {
-    font-size: 1rem;
-    color: #666;
-  }
-  
-  .add-entry-btn {
-    display: inline-block;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    text-align: center;
-  }
-  
-  .add-entry-btn:hover {
-    background-color: #0056b3;
-  }
+.entries-container {
+  padding: 20px;
+  max-width: 80%;
+  margin: 0 auto;
+}
 
-  .entry-button {
-    display: inline-block;
-    padding: 100px 65px;
-    border: none;
-    border-radius: 10px;
-    background-color: #9bb2f6;
-    color: black;
-    cursor: pointer;
-    text-align: left;
-    
-  }
+.entry-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  background-color: #f9f9f9;
+}
+
+.entry-card h3 {
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.entry-card p {
+  font-size: 1rem;
+  color: #666;
+}
+
+.add-entry-btn {
+  display: inline-block;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+}
+
+.add-entry-btn:hover {
+  background-color: #0056b3;
+}
+
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 27px; 
+  justify-content: flex-start; 
+}
+
+.entry-button {
+  flex: 1 1 calc(20% - 27px); 
+  max-width: calc(20% - 27px);
+  padding: 110px 97.5px;
+  border: none;
+  border-radius: 15px;
+  background-color: #9bb2f6;
+  color: black;
+  cursor: pointer;
+  text-align: center;
+}
+
+.entry-button img {
+  width: 20px;
+  height: 20px;
+}
   

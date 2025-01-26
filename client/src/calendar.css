@@ -18,7 +18,7 @@
     
   }
   .react-calendar__tile--active {
-    background: #4caf50 !important;
+    background: #bebebe !important;
     color: white !important;
     
   }
@@ -42,3 +42,26 @@
     text-align: center;
     display: block;
   }
+
+  .event-marker {
+    background: rgb(243, 243, 152);
+    border-radius: 5px;
+    padding: 3px;
+    font-size: 10px;
+    text-align: center;
+    margin-top: 5px;
+    word-wrap: break-word;
+  }
+
+  /* Ensure all days (including weekends) are black */
+.react-calendar__month-view__days__day {
+  color: black !important;
+}
+
+/* Change the background and text color of the current date */
+.react-calendar__tile--now {
+  background: #ef5f5f !important;  /* Change this to your desired color */
+  color: black !important;
+  border-radius: 5px;
+  font-weight: bold;
+}
