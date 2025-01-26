@@ -19,8 +19,18 @@ const ChatInterface = () => {
         headers: { "Content-Type": "application/json" },
       });
 
-      const data = await response.json();
-      setSuggestions(data.startingPrompts.entry); // Access the correct JSON structure
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json(); // Parse JSON response
+      console.log("API Response:", data); // Debugging
+
+      if (data.startingPrompts && data.startingPrompts.entry) {
+        setSuggestions(data.startingPrompts.entry); // ✅ Correctly update state
+      } else {
+        console.error("Invalid API response structure", data);
+      }
     } catch (error) {
       console.error("Error fetching initial prompts:", error);
     }
@@ -88,7 +98,7 @@ const ChatInterface = () => {
       </div>
 
       {/* Starting Suggestions (Hidden after first message) */}
-      {showSuggestions && (
+      {showSuggestions && suggestions.length > 0 && (
         <div className="suggestions">
           <p className="suggestion-title">Starting Suggestions:</p>
           {suggestions.map((suggestion, index) => (
@@ -121,14 +131,6 @@ const ChatInterface = () => {
         <button className="save-journal" onClick={handleSaveJournal}>
           Save Journal
         </button>
-      </div>
-
-      {/* Bottom Navigation Bar */}
-      <div className="bottom-nav">
-        <div className="nav-item">Chat</div>
-        <div className="nav-item">AI Assistants</div>
-        <div className="nav-item">History</div>
-        <div className="nav-item">Account</div>
       </div>
     </div>
   );
