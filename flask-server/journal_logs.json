@@ -1,1 +1,38 @@
-[]
+[
+    {
+        "id": 1,
+        "date": "2025-01-23 06:34:33",
+        "conversation": [
+            "I smiled today when I walked my dog. I was having a rough day at school, and was feeling sad, but this made me feel much better.",
+            "I cope with rough days by making sure to spend time with friends and family. I am going to hang out with my friends later today.",
+            "I am going to the movies with two of my closest friends. We all love new movies, especially superhero ones. I'm super excited to go tonight.",
+            "My favourite movie experience ever was seeing the newest Spider-Man movie with the same friends. He has always been my favourite superhero, but seeing any superhero movie makes me feel super happy."
+        ],
+        "summary": "You mentioned that you smiled today while walking your dog, which really lifted your spirits after a rough day at school. You cope with tough days by spending time with friends and family, and you planned to hang out with friends later. You\u2019re excited about going to the movies tonight with two of your closest friends, especially since you all love superhero films. You also shared that your favorite movie experience was seeing the latest Spider-Man movie with those friends, as Spider-Man has always been your favorite superhero and superhero movies bring you a lot of joy.",
+        "sentiment": "Very Happy"
+    },
+    {
+        "id": 2,
+        "date": "2025-01-25 06:49:03",
+        "conversation": [
+            "Today was so frustrating. I tried to submit an assignment online, but the website kept crashing.",
+            "I emailed my professor to explain, but I feel like I shouldn't even have to do that\u2014it\u2019s their system that doesn\u2019t work properly.",
+            "On top of that, someone cut me off in traffic while I was driving to the library, and it scared me so much. People need to be more considerate on the road!",
+            "Honestly, this has just been one of those days where everything seems to go wrong. It's been very frustrating."
+        ],
+        "summary": "You said you had a really frustrating day. You tried to submit an assignment online, but the website kept crashing, which made you feel like you shouldn't have to email your professor about it since it's their system that isn't working. Then, you experienced a scary moment when someone cut you off in traffic on your way to the library, and you think people need to be more considerate on the road. Overall, you feel like everything went wrong today, adding to your frustration.",
+        "sentiment": "Frustrated"
+    },
+    {
+        "id": 3,
+        "date": "2025-01-26 06:53:52",
+        "conversation": [
+            "I\u2019ve been feeling really down lately. I don\u2019t know if it\u2019s the weather or just how life has been going recently.",
+            "I miss spending time with my family. They live so far away, and I don\u2019t get to visit them as often as I\u2019d like since I'm away at university.",
+            "Work has been really overwhelming, and it feels like no matter how much I do, there\u2019s always more piling up.",
+            "I just want to take a break and have time to clear my head, but it feels like I\u2019m stuck in this cycle of stress and exhaustion."
+        ],
+        "summary": "You said you've been feeling really down lately and you're not sure if it's the weather or just how life has been going. You mentioned that you miss spending time with your family since they live far away and you can't visit them often because you're at university. You also talked about feeling overwhelmed at work, as it seems like no matter how much you accomplish, there's always more to do. You expressed a desire to take a break and clear your head, but you feel stuck in a cycle of stress and exhaustion.",
+        "sentiment": "Depressed"
+    }
+]
