@@ -13,6 +13,7 @@ function App() {
       <Navbar />
       <div className="container">
         <Routes>
+        <Route path="/" element={<ChatInterface />} />
           <Route path="/chat" element={<ChatInterface />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/Entries" element={<Entries />} />
