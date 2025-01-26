@@ -1,37 +1,37 @@
 .chat-container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 80vh;
     background: #ffffff;
-  }
-  
-  .header {
+}
+
+.header {
     padding: 20px;
     text-align: center;
     font-weight: bold;
     font-size: 22px;
-  }
-  
-  .back-btn {
+}
+
+.back-btn {
     position: absolute;
     left: 20px;
     top: 20px;
     cursor: pointer;
     font-size: 20px;
-  }
-  
-  .suggestions {
+}
+
+.suggestions {
     text-align: center;
     margin-top: 20px;
-  }
-  
-  .suggestion-title {
+}
+
+.suggestion-title {
     color: gray;
     font-size: 14px;
     margin-bottom: 10px;
-  }
-  
-  .suggestion {
+}
+
+.suggestion {
     background: #f5f5f5;
     padding: 12px;
     margin: 10px auto;
@@ -41,22 +41,22 @@
     font-size: 16px;
     cursor: pointer;
     transition: background 0.3s;
-  }
-  
-  .suggestion:hover {
+}
+
+.suggestion:hover {
     background: #e0e0e0;
-  }
-  
-  .chat-messages {
+}
+
+.chat-messages {
     flex-grow: 1;
     overflow-y: auto;
     padding: 20px;
     display: flex;
     flex-direction: column;
-  }
-  
-  /* User messages (Left-aligned, gray bubble) */
-  .message.User {
+}
+
+/* User messages (Left-aligned, gray bubble) */
+.message.User {
     align-self: flex-start;
     background-color: #f1f1f1;
     color: black;
@@ -65,10 +65,10 @@
     border-radius: 15px;
     max-width: 70%;
     margin: 5px;
-  }
-  
-  /* AI messages (Right-aligned, blue bubble) */
-  .message.AI {
+}
+
+/* AI messages (Right-aligned, blue bubble) */
+.message.AI {
     align-self: flex-end;
     background-color: #007bff;
     color: white;
@@ -77,18 +77,19 @@
     border-radius: 15px;
     max-width: 70%;
     margin: 5px;
-  }
-  
-  .bottom-section {
+}
+
+.bottom-section {
     width: 100%;
     display: flex;
     align-items: center;
     padding: 10px 20px;
     background: white;
-    padding-bottom: 200px
-  }
-  
-  .chat-input {
+    padding-bottom: 130px;
+}
+
+/* Chat input field */
+.chat-input {
     flex-grow: 1;
     padding: 15px;
     border: none;
@@ -97,50 +98,34 @@
     font-size: 16px;
     outline: none;
     width: 90%;
-  }
-  
-  .save-journal {
-    margin-left: 10px;
-    padding: 12px;
+}
+
+/* Button container - Aligns "Save Journal" and "Keep Prompting" buttons side by side */
+.button-container {
+    display: flex;
+    justify-content: center; /* Align buttons side by side */
+    align-items: center;
+    gap: 10px; /* Space between buttons */
+    margin-left: 10px; /* Align with input box */
+}
+
+/* Save Journal button */
+.save-journal {
+    padding: 12px 20px;
     background-color: #28a745;
     color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-  }
-  
-  .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    background: white;
-    padding: 15px 0;
-    border-top: 1px solid #e0e0e0;
-  }
-  
-  .nav-item {
-    font-size: 14px;
-    color: gray;
-    text-align: center;
-  }
-  
-  /* Container for Keep Prompting button */
-.keep-prompting-container {
-    display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 90px; /* Adjust position above the input box */
-    width: 100%;
-    background-color: white;
-    z-index: 1000; /* Ensure it's above other elements */
-  }
-  
-  /* Keep Prompting button styling */
-  .keep-prompting {
+    transition: background 0.3s;
+}
+
+.save-journal:hover {
+    background-color: #218838;
+}
+
+/* Keep Prompting button */
+.keep-prompting {
     padding: 12px 20px;
     background-color: #007bff;
     color: white;
@@ -149,8 +134,63 @@
     cursor: pointer;
     font-size: 16px;
     transition: background 0.3s;
-  }
-  
-  .keep-prompting:hover {
+}
+
+.keep-prompting:hover {
     background-color: #0056b3;
-  }
+}
+
+/* Suggestions */
+.suggestions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.suggestion-title {
+    color: gray;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* Fade-in effect for suggestions */
+.suggestion {
+    background: #f5f5f5;
+    padding: 12px;
+    margin: 10px auto;
+    border-radius: 10px;
+    width: 80%;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s, opacity 0.5s ease-in-out;
+    
+    opacity: 1;
+    transform: translateY(10px);
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+/* Delay for fade-in */
+.suggestion:nth-child(1) { animation-delay: 0.2s; }
+.suggestion:nth-child(2) { animation-delay: 0.4s; }
+.suggestion:nth-child(3) { animation-delay: 0.6s; }
+
+/* Fade-out animation */
+.suggestion.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.suggestion:hover { background: #e0e0e0; }
+
+/* Back button */
+.back-btn {
+    cursor: pointer;
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
+}

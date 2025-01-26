@@ -6,7 +6,7 @@ export default function Navbar() {
   return (
     <nav className="nav">
       <ul className="chat">
-        <CustomLink to = "/chat"><div className="navLink"><div className="icon"><FontAwesomeIcon icon={faPencil} size="xl"/></div><span>Chat</span></div>
+        <CustomLink to = "/chat"><div className="navLink"><div className="icon"><FontAwesomeIcon icon={faPencil} size="xl"/></div><span>Journal</span></div>
         </CustomLink>
       </ul>
       <ul className="entries">
@@ -14,9 +14,6 @@ export default function Navbar() {
       </ul>
       <ul className="calendar">
       <CustomLink to="/calendar"><div className="navLink"><div className="icon"><FontAwesomeIcon icon={faCalendarDays} size="xl"/></div><span>Calendar</span></div></CustomLink>
-      </ul>
-      <ul className="chatTest">
-      <CustomLink to="/chatTest"><div className="navLink"><div className="icon"><FontAwesomeIcon icon={faCalendarDays} size="xl"/></div><span>ChatTest</span></div></CustomLink>
       </ul>
     </nav>
   )

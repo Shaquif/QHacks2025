@@ -24,4 +24,4 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-journal_logs.json
+flask-server/journal_logs.json
