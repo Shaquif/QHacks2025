@@ -1,3 +1,4 @@
+/* Chat Container */
 .chat-container {
     display: flex;
     flex-direction: column;
@@ -5,32 +6,43 @@
     background: #ffffff;
 }
 
+/* Header */
 .header {
     padding: 20px;
     text-align: center;
     font-weight: bold;
     font-size: 22px;
+    position: relative;
 }
 
+/* Back Button */
 .back-btn {
     position: absolute;
     left: 20px;
     top: 20px;
     cursor: pointer;
     font-size: 20px;
+    transition: transform 0.2s ease-in-out;
 }
 
+.back-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Suggestions Container */
 .suggestions {
     text-align: center;
     margin-top: 20px;
 }
 
+/* Suggestions Title */
 .suggestion-title {
     color: gray;
     font-size: 14px;
     margin-bottom: 10px;
 }
 
+/* Smoother Fade-In Effect */
 .suggestion {
     background: #f5f5f5;
     padding: 12px;
@@ -40,13 +52,39 @@
     text-align: center;
     font-size: 16px;
     cursor: pointer;
-    transition: background 0.3s;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeInUp 0.6s ease-out forwards;
 }
 
+/* Delayed appearance for a natural effect */
+.suggestion:nth-child(1) { animation-delay: 0.2s; }
+.suggestion:nth-child(2) { animation-delay: 0.4s; }
+.suggestion:nth-child(3) { animation-delay: 0.6s; }
+
+/* Separate Fade-Out Effect (Prevent Overlap with Fade-In) */
+.suggestion.fade-out {
+    animation: fadeOutDown 0.4s ease-in-out forwards;
+}
+
+/* Smoother Fade-In Animation */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Smooth Fade-Out Animation */
+@keyframes fadeOutDown {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(15px); }
+}
+
+/* Hover Effect for Suggestions */
 .suggestion:hover {
     background: #e0e0e0;
 }
 
+/* Chat Messages */
 .chat-messages {
     flex-grow: 1;
     overflow-y: auto;
@@ -55,7 +93,19 @@
     flex-direction: column;
 }
 
-/* User messages (Left-aligned, gray bubble) */
+/* Smooth Message Fade-In */
+.message {
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* User Messages */
 .message.User {
     align-self: flex-start;
     background-color: #f1f1f1;
@@ -67,7 +117,7 @@
     margin: 5px;
 }
 
-/* AI messages (Right-aligned, blue bubble) */
+/* AI Messages */
 .message.AI {
     align-self: flex-end;
     background-color: #007bff;
@@ -79,16 +129,17 @@
     margin: 5px;
 }
 
+/* Bottom Section (Input & Buttons) */
 .bottom-section {
     width: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
     padding: 10px 20px;
     background: white;
-    padding-bottom: px;
 }
 
-/* Chat input field */
+/* Chat Input */
 .chat-input {
     flex-grow: 1;
     padding: 15px;
@@ -97,19 +148,41 @@
     background: #f5f5f5;
     font-size: 16px;
     outline: none;
-    width: 90%;
+    width: 100%; /* Full width */
 }
 
-/* Button container - Aligns "Save Journal" and "Keep Prompting" buttons side by side */
-.button-container {
+/* Bottom Section (Input & Buttons Together) */
+.bottom-section {
+    width: 100%;
     display: flex;
-    justify-content: center; /* Align buttons side by side */
     align-items: center;
-    gap: 10px; /* Space between buttons */
-    margin-left: 10px; /* Align with input box */
+    justify-content: space-between; /* Input on left, buttons on right */
+    padding: 10px 20px;
+    background: white;
 }
 
-/* Save Journal button */
+/* Chat Input */
+.chat-input {
+    flex-grow: 1;
+    padding: 15px;
+    border: none;
+    border-radius: 20px;
+    background: #f5f5f5;
+    font-size: 16px;
+    outline: none;
+    width: 100%;
+}
+
+/* Chat Button Container (Bottom-Right Alignment) */
+.chat-button-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end; /* Align buttons to the right */
+    gap: 10px;
+    margin-top: 10px; /* Space from input */
+}
+
+/* Save Journal Button */
 .save-journal {
     padding: 12px 20px;
     background-color: #28a745;
@@ -117,14 +190,14 @@
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.3s ease-in-out;
 }
 
 .save-journal:hover {
     background-color: #218838;
 }
 
-/* Keep Prompting button */
+/* Keep Prompting Button */
 .keep-prompting {
     padding: 12px 20px;
     background-color: #007bff;
@@ -133,77 +206,9 @@
     border-radius: 10px;
     cursor: pointer;
     font-size: 16px;
-    transition: background 0.3s;
+    transition: background 0.3s ease-in-out;
 }
 
 .keep-prompting:hover {
     background-color: #0056b3;
-}
-
-/* Suggestions */
-.suggestions {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.suggestion-title {
-    color: gray;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-/* Suggestions */
-.suggestions {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.suggestion-title {
-    color: gray;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-/* Fade-in effect for suggestions */
-.suggestion {
-    background: #f5f5f5;
-    padding: 12px;
-    margin: 10px auto;
-    border-radius: 10px;
-    width: 80%;
-    text-align: center;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s, opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-
-    opacity: 1;
-    transform: translateY(0);
-    animation: fadeInUp 0.5s ease-out forwards;
-}
-
-/* Delay for fade-in */
-.suggestion:nth-child(1) { animation-delay: 0.2s; }
-.suggestion:nth-child(2) { animation-delay: 0.4s; }
-.suggestion:nth-child(3) { animation-delay: 0.6s; }
-
-/* Top-down fade-out animation */
-.suggestion.fade-out {
-    opacity: 0;
-    transform: translateY(20px);
-    pointer-events: none;
-}
-
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.suggestion:hover { background: #e0e0e0; }
-
-/* Back button */
-.back-btn {
-    cursor: pointer;
-    font-size: 20px;
-    color: black;
-    font-weight: bold;
 }
